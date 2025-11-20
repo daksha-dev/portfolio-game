@@ -18,14 +18,18 @@ import {
 } from 'lucide-react';
 
 // --- IMAGE CONFIGURATION ---
-// To use your local "me.jpg":
-// 1. Place me.jpg inside the "src" folder.
-// 2. Uncomment the import line below:
+// NOTE: The build environment cannot access local files like './me.jpg'.
+// I have commented this out to prevent the crash.
+// 
+// TO USE YOUR PHOTO LOCALLY:
+// 1. Ensure 'me.jpg' is inside the 'src' folder.
+// 2. Uncomment the line below:
 import profilePic from './me.jpg';
 
-// For this preview, we will use the online URL. 
-// When running locally, you can change this to: const activeProfilePic = profilePic;
+// For this preview, we use the online URL. 
+// When running locally, uncomment the import above and change this line to: 
 const activeProfilePic = profilePic;
+//const activeProfilePic = "https://github.com/komali0208.png"; 
 
 // --- SVGs & Assets (Pure Code) ---
 
