@@ -17,6 +17,18 @@ import {
   User
 } from 'lucide-react';
 
+// --- IMAGE CONFIGURATION (READ CAREFULLY) ---
+
+// 1. FOR LOCAL USE / VERCEL DEPLOYMENT:
+//    Uncomment the import below to use your uploaded photo.
+//    Make sure 'me.jpg' is inside your 'src' folder.
+// import profilePic from './me.jpg';
+
+// 2. FOR THIS PREVIEW:
+//    We must use the online URL because the previewer cannot access your local file.
+//    When you run this locally, change the line below to: const activeProfilePic = profilePic;
+const activeProfilePic = "https://github.com/komali0208.png"; 
+
 // --- SVGs & Assets (Pure Code) ---
 
 const PlayerCharacter = ({ isWalking }) => (
@@ -152,10 +164,8 @@ export default function GamePortfolio() {
   const [facingRight, setFacingRight] = useState(true);
   const [windowWidth, setWindowWidth] = useState(1000);
 
-  // CORRECTED WIDTH CALCULATION:
-  // Level 1 (100vw) + Level 2 (100vw) + Level 3 (140vw) + Level 4 (150vw) + Level 5 (130vw) + Level 6 (180vw) + Level 7 (100vw)
-  // TOTAL = 900vw
-  const TOTAL_WIDTH_VW = 900; 
+  // NORMALIZED DENSITY: 500vw Total
+  const TOTAL_WIDTH_VW = 500; 
   
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -232,8 +242,9 @@ export default function GamePortfolio() {
           100% { transform: rotate(0deg); }
         }
         .animate-leg-walk-right { animation: leg-walk-right 0.6s linear infinite; }
-
-        body::-webkit-scrollbar { width: 0; height: 0; }
+        
+        /* Force Hide Scrollbar */
+        body::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
@@ -264,7 +275,7 @@ export default function GamePortfolio() {
       </div>
 
       {/* --- Main Fixed Viewport --- */}
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden">
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden">
         
         {/* Stars */}
         <div 
@@ -316,16 +327,16 @@ export default function GamePortfolio() {
             <div className="w-full h-full opacity-20" style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4 1px, transparent 1px), linear-gradient(#06b6d4 1px, transparent 1px)', backgroundSize: '50px 50px', transform: 'perspective(500px) rotateX(60deg) translateY(-50px)' }}></div>
           </div>
 
-          {/* ================= LEVEL 1: HERO (100vw) ================= */}
-          <div className="relative w-[100vw] h-full flex items-center justify-center flex-shrink-0">
-             <div className="flex flex-col md:flex-row items-center gap-12 -mt-20">
+          {/* ================= LEVEL 1: HERO (80vw) ================= */}
+          <div className="relative w-[80vw] h-full flex items-center justify-center flex-shrink-0">
+             <div className="flex flex-col md:flex-row items-center gap-6 -mt-20">
                
                {/* Photo Avatar */}
                <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full opacity-75 blur transition duration-500 group-hover:opacity-100 animate-pulse"></div>
-                  <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
                     <img 
-                      src="https://github.com/komali0208.png" 
+                      src={activeProfilePic} 
                       alt="Kusuma Komali Priya" 
                       className="w-full h-full object-cover"
                     />
@@ -334,17 +345,17 @@ export default function GamePortfolio() {
 
                {/* Name & Title */}
                <div className="text-center md:text-left">
-                 <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">
+                 <h1 className="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">
                    K KUSUMA<br/>KOMALI PRIYA
                  </h1>
                  
-                 <p className="mt-4 text-lg text-slate-400 max-w-md font-light">
+                 <p className="mt-2 text-sm text-slate-400 max-w-xs font-light">
                    Aspiring Technologist | AI & Data Science Enthusiast
                  </p>
                  
-                 <div className="mt-8 flex md:justify-start justify-center gap-4">
-                   <div className="flex items-center gap-2 text-xs font-mono text-slate-500 animate-pulse">
-                     <div className="w-6 h-6 rounded border border-slate-600 flex items-center justify-center">→</div>
+                 <div className="mt-4 flex md:justify-start justify-center gap-4">
+                   <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 animate-pulse">
+                     <div className="w-5 h-5 rounded border border-slate-600 flex items-center justify-center">→</div>
                      SCROLL TO START
                    </div>
                  </div>
@@ -352,199 +363,160 @@ export default function GamePortfolio() {
              </div>
           </div>
 
-          {/* ================= LEVEL 2: ABOUT (100vw) ================= */}
-          <div className="relative w-[100vw] h-full flex items-end pb-32 flex-shrink-0">
-             <Tree className="w-48 h-64 absolute bottom-32 left-10" type={1} />
-             <Tree className="w-32 h-48 absolute bottom-32 left-60" type={2} />
-
-             <div className="ml-[20vw] mb-32 max-w-xl bg-slate-900/90 p-8 border border-cyan-500/30 rounded-xl backdrop-blur relative group hover:scale-105 transition-transform duration-300">
-               <div className="absolute -top-4 -left-4 w-12 h-12 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(6,182,212,0.6)]">
-                 <Code />
+          {/* ================= LEVEL 2: ABOUT (50vw) ================= */}
+          <div className="relative w-[50vw] h-full flex items-end pb-32 flex-shrink-0">
+             <Tree className="w-32 h-48 absolute bottom-32 left-0" type={1} />
+             
+             <div className="ml-4 mb-32 max-w-sm bg-slate-900/90 p-4 border border-cyan-500/30 rounded-xl backdrop-blur relative group hover:scale-105 transition-transform duration-300">
+               <div className="absolute -top-3 -left-3 w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(6,182,212,0.6)]">
+                 <Code className="w-5 h-5" />
                </div>
-               <h3 className="text-2xl font-bold text-white mb-4">Mission Briefing</h3>
-               <p className="text-slate-300 leading-relaxed mb-4">
-                 I am a traveler in the realm of <span className="text-cyan-400 font-bold">Artificial Intelligence</span> and <span className="text-purple-400 font-bold">Data Science</span>.
-               </p>
-               <p className="text-slate-300 leading-relaxed">
-                 My objective is to build intelligent systems that are secure and responsible. Currently upgrading my neural networks at IIT Madras.
+               <h3 className="text-lg font-bold text-white mb-2">Mission Briefing</h3>
+               <p className="text-xs text-slate-300 leading-relaxed">
+                 I am a traveler in <span className="text-cyan-400 font-bold">AI</span> and <span className="text-purple-400 font-bold">Data Science</span>, building secure, responsible systems. Currently upgrading at IIT Madras.
                </p>
              </div>
           </div>
 
-          {/* ================= LEVEL 3: EDUCATION (140vw) ================= */}
-          <div className="relative w-[140vw] h-full flex items-end pb-32 flex-shrink-0">
-            <div className="absolute bottom-32 left-10">
+          {/* ================= LEVEL 3: EDUCATION (60vw) ================= */}
+          <div className="relative w-[60vw] h-full flex items-end pb-32 flex-shrink-0">
+            <div className="absolute bottom-32 left-0">
                <LevelPost title="The Academy" level="2" />
             </div>
             
-            <div className="absolute bottom-32 left-[25vw] flex items-end gap-20">
+            <div className="absolute bottom-32 left-16 flex items-end gap-4">
               {/* Building 1 */}
               <div className="relative group">
-                 <Building className="w-48 h-64" label="NJC" />
-                 <div className="absolute -top-28 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-4 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
-                    <p className="text-lg text-cyan-300 font-bold mb-1">Narayana Junior College</p>
-                    <p className="text-sm text-slate-300">MPC, Intermediate</p>
-                    <p className="text-xs text-slate-500 mt-1">2021 - 2023</p>
+                 <Building className="w-32 h-48" label="NJC" />
+                 <div className="absolute -top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-3 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
+                    <p className="text-xs text-cyan-300 font-bold">Narayana Jr College</p>
+                    <p className="text-[10px] text-slate-300">Intermediate (2021-23)</p>
                  </div>
               </div>
 
-              {/* Connector */}
-              <div className="w-24 h-2 bg-cyan-900/50 mb-10"></div>
-
               {/* Building 2 */}
               <div className="relative group">
-                 <Building className="w-64 h-96" label="IIT MADRAS" />
-                 <div className="absolute -top-32 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-5 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
-                    <p className="text-lg text-cyan-300 font-bold mb-1">BS in Data Science</p>
-                    <p className="text-sm text-slate-300">Indian Institute of Technology Madras</p>
-                    <p className="text-xs text-slate-500 mt-1">2024 - 2028</p>
-                    <div className="mt-2 pt-2 border-t border-white/10">
-                      <p className="text-xs text-slate-400">Focus: AI, Stats, Math</p>
-                    </div>
+                 <Building className="w-48 h-64" label="IIT MADRAS" />
+                 <div className="absolute -top-24 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-3 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
+                    <p className="text-xs text-cyan-300 font-bold">BS Data Science</p>
+                    <p className="text-[10px] text-slate-300">IIT Madras (2024-28)</p>
                  </div>
               </div>
             </div>
           </div>
 
-          {/* ================= LEVEL 4: EXPERIENCE (150vw) ================= */}
-          <div className="relative w-[150vw] h-full flex items-end pb-32 px-10 flex-shrink-0">
+          {/* ================= LEVEL 4: EXPERIENCE (80vw) ================= */}
+          <div className="relative w-[80vw] h-full flex items-end pb-32 px-2 flex-shrink-0">
             <div className="absolute bottom-32 left-0">
                <LevelPost title="The Lab" level="3" />
             </div>
 
-            <div className="flex gap-32 ml-48">
+            <div className="flex gap-10 ml-16">
                
                {/* Milestone 1 */}
                <div className="relative flex flex-col items-center group">
-                 <div className="w-1 h-32 bg-gradient-to-b from-transparent to-cyan-500"></div>
-                 <div className="w-72 bg-slate-900/90 p-6 rounded-lg border-l-4 border-green-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-white text-lg">YugaYatra Internship</h4>
-                      <Trophy className="w-5 h-5 text-yellow-400" />
+                 <div className="w-1 h-24 bg-gradient-to-b from-transparent to-cyan-500"></div>
+                 <div className="w-48 bg-slate-900/90 p-4 rounded-lg border-l-4 border-green-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-bold text-white text-xs">YugaYatra</h4>
+                      <Trophy className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-sm text-slate-400 mb-3 font-medium">Front-End Developer</p>
-                    <ul className="text-xs text-slate-300 list-disc list-inside space-y-1">
-                      <li>Full-stack feature contribution</li>
-                      <li>AI task integration & code reviews</li>
-                    </ul>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">Front-End Dev</p>
                  </div>
                </div>
 
                {/* Milestone 2 */}
-               <div className="relative flex flex-col items-center mt-[-50px] group">
-                 <div className="w-1 h-48 bg-gradient-to-b from-transparent to-purple-500"></div>
-                 <div className="w-72 bg-slate-900/90 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-white text-lg">Research Program</h4>
-                      <Star className="w-5 h-5 text-yellow-400" />
+               <div className="relative flex flex-col items-center mt-[-30px] group">
+                 <div className="w-1 h-32 bg-gradient-to-b from-transparent to-purple-500"></div>
+                 <div className="w-48 bg-slate-900/90 p-4 rounded-lg border-l-4 border-purple-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-bold text-white text-xs">Research Bootcamp</h4>
+                      <Star className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-sm text-slate-400 mb-3 font-medium">1st Place Winner</p>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      Developed ML-based waste segregation prototype using Computer Vision for recycling plants.
-                    </p>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">1st Place Winner</p>
                  </div>
                </div>
 
                {/* Milestone 3 */}
                <div className="relative flex flex-col items-center group">
-                 <div className="w-1 h-32 bg-gradient-to-b from-transparent to-orange-500"></div>
-                 <div className="w-72 bg-slate-900/90 p-6 rounded-lg border-l-4 border-orange-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-white text-lg">Smart India Hackathon</h4>
-                      <Zap className="w-5 h-5 text-yellow-400" />
+                 <div className="w-1 h-24 bg-gradient-to-b from-transparent to-orange-500"></div>
+                 <div className="w-48 bg-slate-900/90 p-4 rounded-lg border-l-4 border-orange-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-bold text-white text-xs">Smart India Hackathon</h4>
+                      <Zap className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-sm text-slate-400 mb-3 font-medium">Finalist (Internal)</p>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      Proposed solar-electrical hybrid system for SDG-7 sustainable power generation.
-                    </p>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">Finalist (Internal)</p>
                  </div>
                </div>
 
             </div>
           </div>
 
-          {/* ================= LEVEL 5: SKILLS (130vw) ================= */}
-          <div className="relative w-[130vw] h-full flex items-end pb-48 flex-shrink-0">
-            <div className="absolute bottom-32 left-10">
+          {/* ================= LEVEL 5: SKILLS (50vw) ================= */}
+          <div className="relative w-[50vw] h-full flex items-end pb-48 flex-shrink-0">
+            <div className="absolute bottom-32 left-0">
                <LevelPost title="Skill Valley" level="4" />
             </div>
             
-            <div className="flex gap-16 ml-48">
+            <div className="flex gap-6 ml-16">
               <Collectible icon={Terminal} label="Python" />
               <Collectible icon={Code} label="React" />
               <Collectible icon={Database} label="SQL" />
-              <Collectible icon={Cpu} label="ML / AI" />
-              <Collectible icon={Zap} label="Node.js" />
-              <Collectible icon={Globe} label="C/C++" />
+              <Collectible icon={Cpu} label="ML" />
             </div>
           </div>
 
-          {/* ================= LEVEL 6: PROJECTS (180vw) ================= */}
-          <div className="relative w-[180vw] h-full flex items-end pb-32 flex-shrink-0">
-             <div className="absolute bottom-32 left-10">
+          {/* ================= LEVEL 6: PROJECTS (130vw) ================= */}
+          <div className="relative w-[130vw] h-full flex items-end pb-32 flex-shrink-0">
+             <div className="absolute bottom-32 left-0">
                <LevelPost title="Project Arcade" level="5" />
             </div>
 
-             <div className="flex gap-12 ml-48 items-end">
+             <div className="flex gap-6 ml-16 items-end">
                 <ArcadeMachine 
-                  title="CREDIT CARD FRAUD DETECTOR" 
-                  tech="Python • ML • Scikit-learn"
+                  title="FRAUD DETECTOR" 
+                  tech="ML • Python"
                   link="https://github.com/Komali0208/creditcard"
                 />
                 <ArcadeMachine 
-                  title="TODO LIST APP" 
+                  title="TODO LIST" 
                   tech="Python • SQLite" 
                   link="https://github.com/Komali0208/todo-list"
                 />
                 <ArcadeMachine 
-                  title="STUDENT MANAGEMENT SYSTEM" 
-                  tech="HTML • SQL • JS" 
+                  title="STUDENT SYS" 
+                  tech="HTML • SQL" 
                   link="https://github.com/Komali0208/classroom-management-system"
                 />
                 <ArcadeMachine 
-                  title="GAMIFIED CODING PLATFORM" 
-                  tech="React • Node.js • Firebase" 
-                  link="https://github.com/Komali0208"
-                />
-                 <ArcadeMachine 
-                  title="WASTE SEGREGATION AI" 
-                  tech="Computer Vision • ML" 
+                  title="GAMIFIED CODE" 
+                  tech="React • AI" 
                   link="https://github.com/Komali0208"
                 />
              </div>
           </div>
 
-          {/* ================= LEVEL 7: CONTACT (100vw) ================= */}
-          <div className="relative w-[100vw] h-full flex flex-col items-center justify-center pb-20 flex-shrink-0">
+          {/* ================= LEVEL 7: CONTACT (50vw) ================= */}
+          <div className="relative w-[50vw] h-full flex flex-col items-center justify-center pb-20 flex-shrink-0">
             
-            <div className="relative z-10 bg-black/80 p-10 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] text-center max-w-2xl backdrop-blur-xl">
-              <h2 className="text-4xl font-black text-white mb-2">MISSION COMPLETE</h2>
-              <p className="text-xl text-cyan-400 mb-8 font-mono">Ready to Start a New Project?</p>
+            <div className="relative z-10 bg-black/80 p-6 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] text-center max-w-sm backdrop-blur-xl">
+              <h2 className="text-2xl font-black text-white mb-2">GAME OVER?</h2>
+              <p className="text-sm text-cyan-400 mb-4 font-mono">New Game+ : Start Project</p>
               
-              <div className="grid grid-cols-1 gap-4 text-left">
-                 <a href="mailto:kkp.kodimela@gmail.com" className="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group border border-white/5 hover:border-cyan-500/50">
-                    <div className="p-3 bg-red-500/20 rounded-full text-red-400"><Mail /></div>
-                    <div>
-                       <p className="text-xs text-slate-400 uppercase tracking-wider">Send Mail</p>
-                       <p className="text-white font-mono text-lg group-hover:text-cyan-300">kkp.kodimela@gmail.com</p>
-                    </div>
+              <div className="grid grid-cols-1 gap-2 text-left">
+                 <a href="mailto:kkp.kodimela@gmail.com" className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group border border-white/5 hover:border-cyan-500/50">
+                    <Mail className="w-4 h-4 text-red-400" />
+                    <span className="text-xs text-white font-mono">kkp.kodimela@gmail.com</span>
                  </a>
-                 <a href="https://www.linkedin.com/in/kusuma-komali-priya-kodimela/" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group border border-white/5 hover:border-cyan-500/50">
-                    <div className="p-3 bg-blue-500/20 rounded-full text-blue-400"><Linkedin /></div>
-                    <div>
-                       <p className="text-xs text-slate-400 uppercase tracking-wider">Connect on LinkedIn</p>
-                       <p className="text-white font-mono text-lg group-hover:text-cyan-300">/in/kusumakomalipriya</p>
-                    </div>
+                 <a href="https://www.linkedin.com/in/kusuma-komali-priya-kodimela/" target="_blank" rel="noreferrer" className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group border border-white/5 hover:border-cyan-500/50">
+                    <Linkedin className="w-4 h-4 text-blue-400" />
+                    <span className="text-xs text-white font-mono">LinkedIn Profile</span>
                  </a>
               </div>
-
-              <p className="mt-8 text-xs text-slate-600 font-mono">
-                © {new Date().getFullYear()} Kusuma Komali Priya. All rights reserved.
-              </p>
             </div>
 
             {/* Finish Flag */}
-            <div className="absolute bottom-32 right-20 opacity-50">
+            <div className="absolute bottom-32 right-5 opacity-50">
                <div className="w-2 h-64 bg-white"></div>
                <div className="w-32 h-20 bg-cyan-500 animate-pulse"></div>
             </div>
@@ -567,7 +539,7 @@ export default function GamePortfolio() {
       </div>
       
       {/* --- Spacer to Enable Scrolling --- */}
-      <div style={{ height: '850vh' }}></div>
+      <div style={{ height: '500vh' }}></div>
     </div>
   );
 }
