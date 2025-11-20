@@ -25,7 +25,7 @@ import profilePic from './me.jpg';
 
 // For this preview, we will use the online URL. 
 // When running locally, you can change this to: const activeProfilePic = profilePic;
-const activeProfilePic = profilePic; 
+const activeProfilePic = profilePic;
 
 // --- SVGs & Assets (Pure Code) ---
 
