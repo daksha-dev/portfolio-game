@@ -22,12 +22,13 @@ import {
 // 1. FOR LOCAL USE / VERCEL DEPLOYMENT:
 //    Uncomment the import below to use your uploaded photo.
 //    Make sure 'me.jpg' is inside your 'src' folder.
-// import profilePic from './me.jpg';
+import profilePic from './me.jpg';
 
 // 2. FOR THIS PREVIEW:
 //    We must use the online URL because the previewer cannot access your local file.
-//    When you run this locally, change the line below to: const activeProfilePic = profilePic;
-const activeProfilePic = "https://github.com/komali0208.png"; 
+//    When you run this locally, change the line below to:
+const activeProfilePic = profilePic;
+//const activeProfilePic = "https://github.com/komali0208.png"; 
 
 // --- SVGs & Assets (Pure Code) ---
 
