@@ -21,11 +21,11 @@ import {
 // To use your local "me.jpg":
 // 1. Place me.jpg inside the "src" folder.
 // 2. Uncomment the import line below:
-// import profilePic from './me.jpg';
+import profilePic from './me.jpg';
 
 // For this preview, we will use the online URL. 
 // When running locally, you can change this to: const activeProfilePic = profilePic;
-const activeProfilePic = "me.jpg"; 
+const activeProfilePic = profilePic; 
 
 // --- SVGs & Assets (Pure Code) ---
 
