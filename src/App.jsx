@@ -150,11 +150,12 @@ export default function GamePortfolio() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isWalking, setIsWalking] = useState(false);
   const [facingRight, setFacingRight] = useState(true);
-  const containerRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(1000);
 
-  // Constants
-  const TOTAL_WIDTH_VW = 800; // Increased width for spacing
+  // CORRECTED WIDTH CALCULATION:
+  // Level 1 (100vw) + Level 2 (100vw) + Level 3 (140vw) + Level 4 (150vw) + Level 5 (130vw) + Level 6 (180vw) + Level 7 (100vw)
+  // TOTAL = 900vw
+  const TOTAL_WIDTH_VW = 900; 
   
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -169,7 +170,7 @@ export default function GamePortfolio() {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const progress = scrollY / maxScroll; 
       
-      setScrollProgress(progress);
+      setScrollProgress(Math.min(Math.max(progress, 0), 1)); // Clamp between 0 and 1
 
       setIsWalking(true);
       if (Math.abs(scrollY - lastScrollY) < 2) setIsWalking(false);
@@ -303,7 +304,7 @@ export default function GamePortfolio() {
 
         {/* Game World */}
         <div 
-          className="absolute top-0 left-0 h-full flex items-end"
+          className="absolute top-0 left-0 h-full flex items-end flex-nowrap"
           style={{ 
             width: `${TOTAL_WIDTH_VW}vw`,
             transform: `translateX(${translateX}px)`,
@@ -315,15 +316,14 @@ export default function GamePortfolio() {
             <div className="w-full h-full opacity-20" style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4 1px, transparent 1px), linear-gradient(#06b6d4 1px, transparent 1px)', backgroundSize: '50px 50px', transform: 'perspective(500px) rotateX(60deg) translateY(-50px)' }}></div>
           </div>
 
-          {/* ================= LEVEL 1: HERO ================= */}
-          <div className="relative w-[100vw] h-full flex items-center justify-center">
+          {/* ================= LEVEL 1: HERO (100vw) ================= */}
+          <div className="relative w-[100vw] h-full flex items-center justify-center flex-shrink-0">
              <div className="flex flex-col md:flex-row items-center gap-12 -mt-20">
                
                {/* Photo Avatar */}
                <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full opacity-75 blur transition duration-500 group-hover:opacity-100 animate-pulse"></div>
                   <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
-                    {/* REPLACE THE USER ICON BELOW WITH THIS IMG TAG */}
                     <img 
                       src="https://github.com/komali0208.png" 
                       alt="Kusuma Komali Priya" 
@@ -352,8 +352,8 @@ export default function GamePortfolio() {
              </div>
           </div>
 
-          {/* ================= LEVEL 2: ABOUT ================= */}
-          <div className="relative w-[100vw] h-full flex items-end pb-32">
+          {/* ================= LEVEL 2: ABOUT (100vw) ================= */}
+          <div className="relative w-[100vw] h-full flex items-end pb-32 flex-shrink-0">
              <Tree className="w-48 h-64 absolute bottom-32 left-10" type={1} />
              <Tree className="w-32 h-48 absolute bottom-32 left-60" type={2} />
 
@@ -371,8 +371,8 @@ export default function GamePortfolio() {
              </div>
           </div>
 
-          {/* ================= LEVEL 3: EDUCATION ================= */}
-          <div className="relative w-[140vw] h-full flex items-end pb-32">
+          {/* ================= LEVEL 3: EDUCATION (140vw) ================= */}
+          <div className="relative w-[140vw] h-full flex items-end pb-32 flex-shrink-0">
             <div className="absolute bottom-32 left-10">
                <LevelPost title="The Academy" level="2" />
             </div>
@@ -406,8 +406,8 @@ export default function GamePortfolio() {
             </div>
           </div>
 
-          {/* ================= LEVEL 4: EXPERIENCE ================= */}
-          <div className="relative w-[150vw] h-full flex items-end pb-32 px-10">
+          {/* ================= LEVEL 4: EXPERIENCE (150vw) ================= */}
+          <div className="relative w-[150vw] h-full flex items-end pb-32 px-10 flex-shrink-0">
             <div className="absolute bottom-32 left-0">
                <LevelPost title="The Lab" level="3" />
             </div>
@@ -463,8 +463,8 @@ export default function GamePortfolio() {
             </div>
           </div>
 
-          {/* ================= LEVEL 5: SKILLS ================= */}
-          <div className="relative w-[130vw] h-full flex items-end pb-48">
+          {/* ================= LEVEL 5: SKILLS (130vw) ================= */}
+          <div className="relative w-[130vw] h-full flex items-end pb-48 flex-shrink-0">
             <div className="absolute bottom-32 left-10">
                <LevelPost title="Skill Valley" level="4" />
             </div>
@@ -479,8 +479,8 @@ export default function GamePortfolio() {
             </div>
           </div>
 
-          {/* ================= LEVEL 6: PROJECTS ================= */}
-          <div className="relative w-[180vw] h-full flex items-end pb-32">
+          {/* ================= LEVEL 6: PROJECTS (180vw) ================= */}
+          <div className="relative w-[180vw] h-full flex items-end pb-32 flex-shrink-0">
              <div className="absolute bottom-32 left-10">
                <LevelPost title="Project Arcade" level="5" />
             </div>
@@ -514,8 +514,8 @@ export default function GamePortfolio() {
              </div>
           </div>
 
-          {/* ================= LEVEL 7: CONTACT ================= */}
-          <div className="relative w-[100vw] h-full flex flex-col items-center justify-center pb-20">
+          {/* ================= LEVEL 7: CONTACT (100vw) ================= */}
+          <div className="relative w-[100vw] h-full flex flex-col items-center justify-center pb-20 flex-shrink-0">
             
             <div className="relative z-10 bg-black/80 p-10 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] text-center max-w-2xl backdrop-blur-xl">
               <h2 className="text-4xl font-black text-white mb-2">MISSION COMPLETE</h2>
