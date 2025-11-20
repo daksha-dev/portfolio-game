@@ -325,7 +325,7 @@ export default function GamePortfolio() {
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full opacity-75 blur transition duration-500 group-hover:opacity-100 animate-pulse"></div>
                   <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
                     <img 
-                      src="https://github.com/komali0208.png" 
+                      src="src/me.jpg" 
                       alt="Kusuma Komali Priya" 
                       className="w-full h-full object-cover"
                     />
