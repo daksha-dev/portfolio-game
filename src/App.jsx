@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Github, Linkedin, Mail, ChevronDown, Trophy, Star, Zap, 
-  Code, Database, Cpu, Terminal, Download
+  Code, Database, Cpu, Terminal, Download,
+  BarChart, Binary // Added new icons for Statistics and Data Science
 } from 'lucide-react';
-import profilePic from './me.jpg';
 
 // --- CONFIGURATION ---
-const activeProfilePic = profilePic;
+const activeProfilePic = "https://github.com/komali0208.png"; 
 
 // WIDTH CONFIGURATION (The "Map Size")
-// Mobile values are now HUGE to give elements breathing room.
-// The character will have to walk further, preventing overlap.
+// UPDATED: Increased mobile widths significantly to fix iPhone overlapping.
+// The Skills section is now much wider to fit the new items.
 const SECTION_WIDTHS = {
-  hero:       { mobile: 100, desktop: 60 },   // 1 screen wide
-  about:      { mobile: 120, desktop: 50 },   // 1.2 screens wide
-  education:  { mobile: 200, desktop: 60 },   // 2 screens wide (1 per building)
-  experience: { mobile: 250, desktop: 80 },   // 2.5 screens (1 per card)
-  skills:     { mobile: 150, desktop: 60 },   
-  projects:   { mobile: 400, desktop: 120 },  // 4 screens (1 per machine)
+  hero:       { mobile: 100, desktop: 60 },   
+  about:      { mobile: 140, desktop: 50 },   // Increased for breathing room
+  education:  { mobile: 220, desktop: 60 },   
+  experience: { mobile: 320, desktop: 80 },   // Increased to prevent card overlap
+  skills:     { mobile: 300, desktop: 70 },   // Increased heavily for new skills
+  projects:   { mobile: 450, desktop: 120 },  // Increased for safety on small screens
   contact:    { mobile: 100, desktop: 50 },   
 };
 
-// --- ASSETS (Upscaled for Mobile & Desktop) ---
+// --- ASSETS ---
 
 const PlayerCharacter = ({ isWalking }) => (
   <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
@@ -80,7 +80,6 @@ const ArcadeMachine = ({ title, tech, link }) => (
     href={link}
     target="_blank" 
     rel="noopener noreferrer"
-    // FIX: Massive size for mobile (w-72 h-96) to fill vertical space
     className="relative w-72 h-96 md:w-64 md:h-80 lg:w-80 lg:h-96 group cursor-pointer hover:-translate-y-4 transition-transform duration-300 block flex-shrink-0"
   >
     <svg viewBox="0 0 100 140" className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
@@ -174,10 +173,8 @@ export default function GamePortfolio() {
     };
   }, []);
 
-  // Horizontal Translation Logic (Applied to both Mobile and Desktop)
   const translateX = -(scrollProgress * (worldConfig.totalVW * (windowWidth / 100) - windowWidth));
   
-  // Helper for section width
   const getWidth = (section) => ({ 
     width: `${isMobile ? SECTION_WIDTHS[section].mobile : SECTION_WIDTHS[section].desktop}vw` 
   });
@@ -211,7 +208,6 @@ export default function GamePortfolio() {
         </div>
       </div>
 
-      {/* SCROLL INDICATOR */}
       <div className="fixed bottom-8 right-8 z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 animate-pulse pointer-events-none">
         <span className="text-xs font-mono text-cyan-400 flex items-center gap-2">
           SCROLL <ChevronDown className="w-4 h-4" />
@@ -270,8 +266,6 @@ export default function GamePortfolio() {
           {/* Level 3: Education */}
           <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('education')}>
             <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Academy" level="2" /></div>
-            
-            {/* Increased Gap for Mobile so buildings don't overlap */}
             <div className="flex items-end gap-10 md:gap-12 ml-24 md:ml-20">
               <div className="relative group hover:z-10 flex flex-col items-center">
                  <Building className="w-40 h-64 md:w-64 md:h-96" label="NJC" />
@@ -287,11 +281,8 @@ export default function GamePortfolio() {
           {/* Level 4: Experience */}
           <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('experience')}>
             <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="The Lab" level="3" /></div>
-            
-            {/* Massive gap for mobile to spread cards out */}
             <div className="flex gap-8 md:gap-16 ml-24 md:ml-24">
                <ExperienceCard title="YugaYatra" role="Front-End Dev" color="cyan" icon={Trophy} height="h-40" />
-               {/* Negative Margin Top only for Desktop to create staggered look, removed for mobile */}
                <ExperienceCard title="Research" role="1st Place Winner" color="purple" icon={Star} height="h-48" className="md:-mt-20" />
                <ExperienceCard title="SIH Hackathon" role="Finalist" color="orange" icon={Zap} height="h-40" />
             </div>
@@ -300,18 +291,20 @@ export default function GamePortfolio() {
           {/* Level 5: Skills */}
           <div className="relative h-full flex items-end pb-48 flex-shrink-0" style={getWidth('skills')}>
             <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Skill Valley" level="4" /></div>
+            {/* Added New Skills Here */}
             <div className="flex gap-8 md:gap-12 ml-24 md:ml-24">
               <Collectible icon={Terminal} label="Python" />
               <Collectible icon={Code} label="React" />
               <Collectible icon={Database} label="SQL" />
               <Collectible icon={Cpu} label="ML" />
+              <Collectible icon={BarChart} label="Stats" /> 
+              <Collectible icon={Binary} label="Data Sci" /> 
             </div>
           </div>
 
           {/* Level 6: Projects */}
           <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('projects')}>
              <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Arcade" level="5" /></div>
-             {/* Huge Gap for Mobile */}
              <div className="flex gap-12 md:gap-10 ml-24 md:ml-24 items-end">
                 <ArcadeMachine title="FRAUD DETECTOR" tech="ML • Python" link="https://github.com/Komali0208/creditcard" />
                 <ArcadeMachine title="TODO LIST" tech="Python • SQLite" link="https://github.com/Komali0208/todo-list" />
@@ -338,20 +331,20 @@ export default function GamePortfolio() {
 
       </div>
 
-      {/* Character - Fixed position, walking animation */}
+      {/* Character */}
       <div className="fixed z-20 pointer-events-none drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] bottom-24 md:bottom-32 left-1/2 -translate-x-1/2 w-20 h-20 md:w-24 md:h-24">
            <div style={{ transform: facingRight ? 'scaleX(1)' : 'scaleX(-1)', transition: 'transform 0.2s' }}>
              <PlayerCharacter isWalking={isWalking} />
            </div>
       </div>
       
-      {/* Spacer for scrolling - Long scroll area needed for mobile due to increased width */}
+      {/* Spacer for scrolling */}
       <div style={{ height: `${worldConfig.totalVW * (isMobile ? 2 : 0.5)}vh` }}></div>
     </div>
   );
 }
 
-// Helper Component for Experience
+// Helper Component
 const ExperienceCard = ({ title, role, color, icon: Icon, height, className = "" }) => {
     const borderColors = { cyan: 'border-cyan-500', purple: 'border-purple-500', orange: 'border-orange-500' };
     const gradients = { cyan: 'from-transparent to-cyan-500', purple: 'from-transparent to-purple-500', orange: 'from-transparent to-orange-500' };
