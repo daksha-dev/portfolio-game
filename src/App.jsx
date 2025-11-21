@@ -33,14 +33,14 @@ const activeProfilePic = "https://github.com/komali0208.png";
 
 // --- SECTION WIDTH CONFIGURATION (Revised for Mobile Safety) ---
 // Defines how wide each section is in Viewport Width (vw) units.
-// I have INCREASED mobile widths significantly to prevent overlapping billboards.
+// I have GREATLY INCREASED mobile widths to fix overlapping boards.
 const SECTION_WIDTHS = {
   hero:       { mobile: 100, desktop: 60 },
   about:      { mobile: 100, desktop: 40 },
-  education:  { mobile: 160, desktop: 60 }, // Increased from 140 to prevent potential building overlap
-  experience: { mobile: 240, desktop: 80 }, // Increased from 160 to 240 to fit all 3 billboards
-  skills:     { mobile: 140, desktop: 60 },
-  projects:   { mobile: 320, desktop: 130 }, // Increased to ensure arcade machines fit
+  education:  { mobile: 200, desktop: 60 }, // Wider to fit buildings
+  experience: { mobile: 350, desktop: 80 }, // MUCH wider to stop overlap with Level 5
+  skills:     { mobile: 220, desktop: 60 }, // Wider for bigger icons
+  projects:   { mobile: 420, desktop: 130 }, // Much wider for arcade machines
   contact:    { mobile: 100, desktop: 50 },
 };
 
@@ -124,7 +124,8 @@ const ArcadeMachine = ({ title, tech, link }) => (
     href={link}
     target="_blank" 
     rel="noopener noreferrer"
-    className="relative w-48 h-64 md:w-64 md:h-80 group cursor-pointer hover:-translate-y-4 transition-transform duration-300 block flex-shrink-0"
+    // UPSCALED: Base size increased for mobile (w-64 h-80)
+    className="relative w-64 h-80 group cursor-pointer hover:-translate-y-4 transition-transform duration-300 block flex-shrink-0"
   >
     {/* Cabinet SVG */}
     <svg viewBox="0 0 100 140" className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
@@ -139,10 +140,10 @@ const ArcadeMachine = ({ title, tech, link }) => (
     </svg>
     
     {/* Screen Content */}
-    <div className="absolute top-[28%] left-[22%] w-[56%] h-[32%] bg-black overflow-hidden p-1 md:p-2 flex flex-col items-center justify-center text-center">
-      <h4 className="text-[7px] md:text-[9px] font-bold text-cyan-400 leading-tight mb-1 animate-pulse uppercase">{title}</h4>
-      <p className="text-[5px] md:text-[7px] text-green-400 font-mono hidden md:block">{tech}</p>
-      <div className="mt-1 md:mt-2 text-[4px] md:text-[6px] text-white bg-cyan-900 px-1 rounded hidden group-hover:block">
+    <div className="absolute top-[28%] left-[22%] w-[56%] h-[32%] bg-black overflow-hidden p-2 flex flex-col items-center justify-center text-center">
+      <h4 className="text-[9px] font-bold text-cyan-400 leading-tight mb-1 animate-pulse uppercase">{title}</h4>
+      <p className="text-[7px] text-green-400 font-mono hidden md:block">{tech}</p>
+      <div className="mt-2 text-[6px] text-white bg-cyan-900 px-1 rounded hidden group-hover:block">
         VIEW
       </div>
     </div>
@@ -151,23 +152,25 @@ const ArcadeMachine = ({ title, tech, link }) => (
 
 const Collectible = ({ icon: Icon, label }) => (
   <div className="flex flex-col items-center animate-float flex-shrink-0">
-    <div className="w-12 h-12 md:w-16 md:h-16 bg-slate-800/80 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.4)] rotate-45 mb-4 group hover:scale-110 transition-transform">
+    {/* UPSCALED: Base size w-16 h-16 */}
+    <div className="w-16 h-16 bg-slate-800/80 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.4)] rotate-45 mb-4 group hover:scale-110 transition-transform">
       <div className="-rotate-45">
-        <Icon className="w-6 h-6 md:w-8 md:h-8 text-yellow-400" />
+        <Icon className="w-8 h-8 text-yellow-400" />
       </div>
     </div>
-    <span className="bg-black/50 text-white text-[10px] md:text-xs px-2 py-1 rounded backdrop-blur-sm border border-white/10">{label}</span>
+    <span className="bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm border border-white/10">{label}</span>
   </div>
 );
 
 const LevelPost = ({ title, level }) => (
-  <div className="flex flex-col items-center justify-end h-48 md:h-64 w-12 md:w-16 relative group flex-shrink-0">
-     <div className="absolute bottom-0 w-1 md:w-2 h-32 md:h-48 bg-slate-600"></div>
-     <div className="absolute bottom-28 md:bottom-40 p-2 md:p-3 bg-cyan-900/80 border-2 border-cyan-400 rounded shadow-[0_0_15px_rgba(6,182,212,0.5)] transform -rotate-6 whitespace-nowrap hover:rotate-0 transition-transform">
-       <p className="text-[8px] md:text-[10px] text-cyan-200 uppercase tracking-wider font-mono">Level {level}</p>
-       <p className="text-xs md:text-sm font-bold text-white uppercase">{title}</p>
+  // UPSCALED: Base size h-64 w-16
+  <div className="flex flex-col items-center justify-end h-64 w-16 relative group flex-shrink-0">
+     <div className="absolute bottom-0 w-2 h-48 bg-slate-600"></div>
+     <div className="absolute bottom-40 p-3 bg-cyan-900/80 border-2 border-cyan-400 rounded shadow-[0_0_15px_rgba(6,182,212,0.5)] transform -rotate-6 whitespace-nowrap hover:rotate-0 transition-transform">
+       <p className="text-[10px] text-cyan-200 uppercase tracking-wider font-mono">Level {level}</p>
+       <p className="text-sm font-bold text-white uppercase">{title}</p>
      </div>
-     <div className="absolute bottom-0 w-6 md:w-8 h-1 md:h-2 bg-slate-500 rounded-full"></div>
+     <div className="absolute bottom-0 w-8 h-2 bg-slate-500 rounded-full"></div>
   </div>
 );
 
@@ -363,7 +366,7 @@ export default function GamePortfolio() {
                {/* Photo Avatar */}
                <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full opacity-75 blur transition duration-500 group-hover:opacity-100 animate-pulse"></div>
-                  <div className="relative w-24 h-24 md:w-40 md:h-40 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
                     <img 
                       src={activeProfilePic} 
                       alt="Kusuma Komali Priya" 
@@ -374,11 +377,11 @@ export default function GamePortfolio() {
 
                {/* Name & Title */}
                <div className="text-center md:text-left">
-                 <h1 className="text-2xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">
+                 <h1 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">
                    K KUSUMA<br/>KOMALI PRIYA
                  </h1>
                  
-                 <p className="mt-2 text-xs md:text-base text-slate-400 max-w-xs font-light mx-auto md:mx-0">
+                 <p className="mt-2 text-sm md:text-base text-slate-400 max-w-xs font-light mx-auto md:mx-0">
                    Aspiring Technologist | AI & Data Science Enthusiast
                  </p>
                  
@@ -396,12 +399,12 @@ export default function GamePortfolio() {
           <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('about')}>
              <Tree className="w-24 h-32 md:w-48 md:h-64 absolute bottom-24 md:bottom-32 left-0" type={1} />
              
-             <div className="ml-8 md:ml-4 mb-32 w-64 md:w-96 bg-slate-900/90 p-4 md:p-6 border border-cyan-500/30 rounded-xl backdrop-blur relative group hover:scale-105 transition-transform duration-300 transform md:scale-110 origin-bottom-left">
+             <div className="ml-8 md:ml-4 mb-32 w-72 md:w-96 bg-slate-900/90 p-4 md:p-6 border border-cyan-500/30 rounded-xl backdrop-blur relative group hover:scale-105 transition-transform duration-300 transform md:scale-110 origin-bottom-left">
                <div className="absolute -top-3 -left-3 w-8 h-8 md:w-10 md:h-10 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(6,182,212,0.6)]">
                  <Code className="w-4 h-4 md:w-5 md:h-5" />
                </div>
-               <h3 className="text-sm md:text-lg font-bold text-white mb-2">Mission Briefing</h3>
-               <p className="text-[10px] md:text-xs text-slate-300 leading-relaxed">
+               <h3 className="text-base md:text-lg font-bold text-white mb-2">Mission Briefing</h3>
+               <p className="text-xs text-slate-300 leading-relaxed">
                  I am a traveler in <span className="text-cyan-400 font-bold">AI</span> and <span className="text-purple-400 font-bold">Data Science</span>, building secure, responsible systems. Currently upgrading at IIT Madras.
                </p>
              </div>
@@ -413,10 +416,10 @@ export default function GamePortfolio() {
                <LevelPost title="The Academy" level="2" />
             </div>
             
-            <div className="absolute bottom-24 md:bottom-32 left-12 md:left-20 flex items-end gap-4 md:gap-8">
+            <div className="absolute bottom-24 md:bottom-32 left-16 md:left-20 flex items-end gap-4 md:gap-8">
               {/* Building 1 */}
               <div className="relative group hover:z-10">
-                 <Building className="w-24 h-36 md:w-40 md:h-56" label="NJC" />
+                 <Building className="w-32 h-48 md:w-40 md:h-56" label="NJC" />
                  <div className="absolute -top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-3 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
                     <p className="text-xs text-cyan-300 font-bold">Narayana Jr College</p>
                     <p className="text-[10px] text-slate-300">Intermediate (2021-23)</p>
@@ -425,7 +428,7 @@ export default function GamePortfolio() {
 
               {/* Building 2 */}
               <div className="relative group hover:z-10">
-                 <Building className="w-32 h-48 md:w-56 md:h-80" label="IIT MADRAS" />
+                 <Building className="w-40 h-64 md:w-56 md:h-80" label="IIT MADRAS" />
                  <div className="absolute -top-24 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/90 p-3 rounded-lg border border-cyan-500/50 whitespace-nowrap z-30 shadow-[0_0_30px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2">
                     <p className="text-xs text-cyan-300 font-bold">BS Data Science</p>
                     <p className="text-[10px] text-slate-300">IIT Madras (2024-28)</p>
@@ -440,41 +443,41 @@ export default function GamePortfolio() {
                <LevelPost title="The Lab" level="3" />
             </div>
 
-            <div className="flex gap-4 md:gap-10 ml-12 md:ml-20">
+            <div className="flex gap-6 md:gap-10 ml-16 md:ml-20">
                
                {/* Milestone 1 */}
                <div className="relative flex flex-col items-center group">
                  <div className="w-1 h-16 md:h-24 bg-gradient-to-b from-transparent to-cyan-500"></div>
-                 <div className="w-40 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-green-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                 <div className="w-48 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-green-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
                     <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-bold text-white text-[10px] md:text-xs">YugaYatra</h4>
+                      <h4 className="font-bold text-white text-xs">YugaYatra</h4>
                       <Trophy className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-[8px] md:text-[10px] text-slate-400 mb-1 font-medium">Front-End Dev</p>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">Front-End Dev</p>
                  </div>
                </div>
 
                {/* Milestone 2 */}
                <div className="relative flex flex-col items-center mt-[-20px] md:mt-[-30px] group">
                  <div className="w-1 h-24 md:h-32 bg-gradient-to-b from-transparent to-purple-500"></div>
-                 <div className="w-40 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-purple-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                 <div className="w-48 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-purple-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
                     <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-bold text-white text-[10px] md:text-xs">Research Bootcamp</h4>
+                      <h4 className="font-bold text-white text-xs">Research Bootcamp</h4>
                       <Star className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-[8px] md:text-[10px] text-slate-400 mb-1 font-medium">1st Place Winner</p>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">1st Place Winner</p>
                  </div>
                </div>
 
                {/* Milestone 3 */}
                <div className="relative flex flex-col items-center group">
                  <div className="w-1 h-16 md:h-24 bg-gradient-to-b from-transparent to-orange-500"></div>
-                 <div className="w-40 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-orange-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
+                 <div className="w-48 md:w-56 bg-slate-900/90 p-3 md:p-4 rounded-lg border-l-4 border-orange-500 hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg">
                     <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-bold text-white text-[10px] md:text-xs">Smart India Hackathon</h4>
+                      <h4 className="font-bold text-white text-xs">Smart India Hackathon</h4>
                       <Zap className="w-3 h-3 text-yellow-400" />
                     </div>
-                    <p className="text-[8px] md:text-[10px] text-slate-400 mb-1 font-medium">Finalist (Internal)</p>
+                    <p className="text-[10px] text-slate-400 mb-1 font-medium">Finalist (Internal)</p>
                  </div>
                </div>
 
@@ -487,7 +490,7 @@ export default function GamePortfolio() {
                <LevelPost title="Skill Valley" level="4" />
             </div>
             
-            <div className="flex gap-2 md:gap-4 ml-12 md:ml-20">
+            <div className="flex gap-3 md:gap-4 ml-16 md:ml-20">
               <Collectible icon={Terminal} label="Python" />
               <Collectible icon={Code} label="React" />
               <Collectible icon={Database} label="SQL" />
@@ -501,7 +504,7 @@ export default function GamePortfolio() {
                <LevelPost title="Project Arcade" level="5" />
             </div>
 
-             <div className="flex gap-2 md:gap-6 ml-12 md:ml-20 items-end">
+             <div className="flex gap-4 md:gap-6 ml-16 md:ml-20 items-end">
                 <ArcadeMachine 
                   title="FRAUD DETECTOR" 
                   tech="ML • Python"
