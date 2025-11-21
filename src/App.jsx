@@ -199,13 +199,13 @@ export default function GamePortfolio() {
 
       {/* UI Overlay */}
       <div className="fixed top-0 left-0 w-full h-20 z-50 flex justify-between items-center px-4 md:px-8 pointer-events-none">
-        <a href="#" className="flex items-center gap-2 bg-cyan-500/20 hover:bg-cyan-500/40 backdrop-blur-md px-3 py-1 md:px-4 md:py-2 rounded-lg border border-cyan-500/50 transition-all pointer-events-auto group cursor-pointer">
+        <a href="https://drive.google.com/file/d/189XtYap5uvyWyDp3YzojsITzf210AMu6/view?usp=drive_link" className="flex items-center gap-2 bg-cyan-500/20 hover:bg-cyan-500/40 backdrop-blur-md px-3 py-1 md:px-4 md:py-2 rounded-lg border border-cyan-500/50 transition-all pointer-events-auto group cursor-pointer">
           <Download className="w-3 h-3 md:w-4 md:h-4 text-cyan-400 group-hover:text-white" />
           <span className="text-cyan-300 font-mono text-xs md:text-sm font-bold group-hover:text-white">RESUME</span>
         </a>
         <div className="flex gap-2 md:gap-4 pointer-events-auto">
-           <a href="#" className="p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full transition-colors"><Github className="w-4 h-4 md:w-5 md:h-5" /></a>
-           <a href="#" className="p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full transition-colors"><Linkedin className="w-4 h-4 md:w-5 md:h-5" /></a>
+           <a href="https://github.com/komali0208" className="p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full transition-colors"><Github className="w-4 h-4 md:w-5 md:h-5" /></a>
+           <a href="https://www.linkedin.com/in/kusuma-komali-priya-kodimela/" className="p-2 bg-black/50 hover:bg-cyan-500/20 rounded-full transition-colors"><Linkedin className="w-4 h-4 md:w-5 md:h-5" /></a>
         </div>
       </div>
 
