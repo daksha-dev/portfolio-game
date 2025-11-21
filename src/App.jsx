@@ -3,9 +3,10 @@ import {
   Github, Linkedin, Mail, ChevronDown, Trophy, Star, Zap, 
   Code, Database, Cpu, Terminal, Download
 } from 'lucide-react';
+import profilePic from './me.jpg';
 
 // --- CONFIGURATION ---
-const activeProfilePic = "https://github.com/komali0208.png"; 
+const activeProfilePic = profilePic;
 
 // WIDTH CONFIGURATION (The "Map Size")
 // Mobile values are now HUGE to give elements breathing room.
