@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Github, 
   Linkedin, 
@@ -31,17 +31,16 @@ import {
 // const activeProfilePic = profilePic;
 const activeProfilePic = "https://github.com/komali0208.png"; 
 
-// --- SECTION WIDTH CONFIGURATION (The magic fix) ---
+// --- SECTION WIDTH CONFIGURATION (Revised for Mobile Safety) ---
 // Defines how wide each section is in Viewport Width (vw) units.
-// Mobile needs MORE width to prevent overlap.
-// Desktop needs LESS width to keep gameplay tight.
+// I have INCREASED mobile widths significantly to prevent overlapping billboards.
 const SECTION_WIDTHS = {
   hero:       { mobile: 100, desktop: 60 },
   about:      { mobile: 100, desktop: 40 },
-  education:  { mobile: 140, desktop: 60 }, // Wide on mobile for buildings
-  experience: { mobile: 160, desktop: 80 }, // Wide for timeline
-  skills:     { mobile: 120, desktop: 60 },
-  projects:   { mobile: 280, desktop: 130 }, // Very wide for arcade machines
+  education:  { mobile: 160, desktop: 60 }, // Increased from 140 to prevent potential building overlap
+  experience: { mobile: 240, desktop: 80 }, // Increased from 160 to 240 to fit all 3 billboards
+  skills:     { mobile: 140, desktop: 60 },
+  projects:   { mobile: 320, desktop: 130 }, // Increased to ensure arcade machines fit
   contact:    { mobile: 100, desktop: 50 },
 };
 
