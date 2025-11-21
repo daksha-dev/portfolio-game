@@ -7,18 +7,20 @@ import {
 // --- CONFIGURATION ---
 const activeProfilePic = "https://github.com/komali0208.png"; 
 
-// We only need widths for Desktop now. Mobile will just stack vertically.
-const DESKTOP_SECTION_WIDTHS = {
-  hero:       60,
-  about:      50,
-  education:  60, 
-  experience: 80, 
-  skills:     60,
-  projects:   120, 
-  contact:    50,
+// WIDTH CONFIGURATION (The "Map Size")
+// Mobile values are now HUGE to give elements breathing room.
+// The character will have to walk further, preventing overlap.
+const SECTION_WIDTHS = {
+  hero:       { mobile: 100, desktop: 60 },   // 1 screen wide
+  about:      { mobile: 120, desktop: 50 },   // 1.2 screens wide
+  education:  { mobile: 200, desktop: 60 },   // 2 screens wide (1 per building)
+  experience: { mobile: 250, desktop: 80 },   // 2.5 screens (1 per card)
+  skills:     { mobile: 150, desktop: 60 },   
+  projects:   { mobile: 400, desktop: 120 },  // 4 screens (1 per machine)
+  contact:    { mobile: 100, desktop: 50 },   
 };
 
-// --- ASSETS (Upscaled for Desktop) ---
+// --- ASSETS (Upscaled for Mobile & Desktop) ---
 
 const PlayerCharacter = ({ isWalking }) => (
   <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
@@ -36,12 +38,6 @@ const PlayerCharacter = ({ isWalking }) => (
       <rect x="38" y="75" width="8" height="15" rx="4" fill="#1e293b" className={`origin-top ${isWalking ? 'animate-leg-walk-left' : ''}`} />
       <rect x="54" y="75" width="8" height="15" rx="4" fill="#1e293b" className={`origin-top ${isWalking ? 'animate-leg-walk-right' : ''}`} />
     </g>
-  </svg>
-);
-
-const Cloud = ({ className }) => (
-  <svg viewBox="0 0 100 60" className={className}>
-    <path d="M10 40 Q25 25 40 40 Q55 15 70 40 Q85 25 90 40 L90 55 L10 55 Z" fill="#ffffff" fillOpacity="0.1" />
   </svg>
 );
 
@@ -83,9 +79,8 @@ const ArcadeMachine = ({ title, tech, link }) => (
     href={link}
     target="_blank" 
     rel="noopener noreferrer"
-    // FIX: Increased sizes significantly for desktop (md:w-64, lg:w-80, xl:w-96)
-    // Mobile: w-full max-w-[200px] to fit vertically
-    className="relative w-48 h-64 md:w-64 md:h-80 lg:w-80 lg:h-96 group cursor-pointer hover:-translate-y-4 transition-transform duration-300 block flex-shrink-0 mx-auto md:mx-0"
+    // FIX: Massive size for mobile (w-72 h-96) to fill vertical space
+    className="relative w-72 h-96 md:w-64 md:h-80 lg:w-80 lg:h-96 group cursor-pointer hover:-translate-y-4 transition-transform duration-300 block flex-shrink-0"
   >
     <svg viewBox="0 0 100 140" className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
       <path d="M10 140 L10 40 L20 10 L80 10 L90 40 L90 140 Z" fill="#1e293b" stroke="#06b6d4" strokeWidth="2" />
@@ -98,32 +93,32 @@ const ArcadeMachine = ({ title, tech, link }) => (
       <circle cx="65" cy="105" r="2" fill="#ef4444" />
     </svg>
     <div className="absolute top-[28%] left-[22%] w-[56%] h-[32%] bg-black overflow-hidden p-2 flex flex-col items-center justify-center text-center">
-      <h4 className="text-[8px] md:text-[10px] font-bold text-cyan-400 leading-tight mb-1 animate-pulse uppercase">{title}</h4>
-      <p className="text-[6px] md:text-[8px] text-green-400 font-mono hidden md:block">{tech}</p>
-      <div className="mt-1 md:mt-2 text-[6px] md:text-[8px] text-white bg-cyan-900 px-2 rounded hidden group-hover:block">VIEW</div>
+      <h4 className="text-[10px] md:text-[10px] font-bold text-cyan-400 leading-tight mb-1 animate-pulse uppercase">{title}</h4>
+      <p className="text-[8px] md:text-[8px] text-green-400 font-mono hidden md:block">{tech}</p>
+      <div className="mt-2 text-[8px] text-white bg-cyan-900 px-2 rounded hidden group-hover:block">VIEW</div>
     </div>
   </a>
 );
 
 const Collectible = ({ icon: Icon, label }) => (
-  <div className="flex flex-col items-center animate-float flex-shrink-0 p-2">
-    <div className="w-16 h-16 md:w-24 md:h-24 bg-slate-800/80 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.4)] rotate-45 mb-4 group hover:scale-110 transition-transform">
+  <div className="flex flex-col items-center animate-float flex-shrink-0 px-4">
+    <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-800/80 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.4)] rotate-45 mb-4 group hover:scale-110 transition-transform">
       <div className="-rotate-45">
-        <Icon className="w-8 h-8 md:w-12 md:h-12 text-yellow-400" />
+        <Icon className="w-10 h-10 md:w-12 md:h-12 text-yellow-400" />
       </div>
     </div>
-    <span className="bg-black/50 text-white text-xs md:text-base px-3 py-1 rounded backdrop-blur-sm border border-white/10">{label}</span>
+    <span className="bg-black/50 text-white text-sm md:text-base px-3 py-1 rounded backdrop-blur-sm border border-white/10">{label}</span>
   </div>
 );
 
 const LevelPost = ({ title, level }) => (
-  <div className="flex flex-col items-center justify-end h-40 md:h-80 w-16 md:w-20 relative group flex-shrink-0">
-     <div className="absolute bottom-0 w-1.5 md:w-2 h-28 md:h-64 bg-slate-600"></div>
-     <div className="absolute bottom-24 md:bottom-56 p-2 md:p-4 bg-cyan-900/80 border-2 border-cyan-400 rounded shadow-[0_0_15px_rgba(6,182,212,0.5)] transform -rotate-6 whitespace-nowrap hover:rotate-0 transition-transform">
-       <p className="text-[9px] md:text-xs text-cyan-200 uppercase tracking-wider font-mono">Level {level}</p>
-       <p className="text-xs md:text-base font-bold text-white uppercase">{title}</p>
+  <div className="flex flex-col items-center justify-end h-64 md:h-80 w-20 relative group flex-shrink-0">
+     <div className="absolute bottom-0 w-2 h-56 md:h-64 bg-slate-600"></div>
+     <div className="absolute bottom-48 md:bottom-56 p-3 md:p-4 bg-cyan-900/80 border-2 border-cyan-400 rounded shadow-[0_0_15px_rgba(6,182,212,0.5)] transform -rotate-6 whitespace-nowrap hover:rotate-0 transition-transform">
+       <p className="text-xs text-cyan-200 uppercase tracking-wider font-mono">Level {level}</p>
+       <p className="text-sm md:text-base font-bold text-white uppercase">{title}</p>
      </div>
-     <div className="absolute bottom-0 w-8 md:w-10 h-1.5 md:h-2 bg-slate-500 rounded-full"></div>
+     <div className="absolute bottom-0 w-10 h-2 bg-slate-500 rounded-full"></div>
   </div>
 );
 
@@ -135,12 +130,14 @@ export default function GamePortfolio() {
 
   const isMobile = windowWidth < 768;
 
-  // Calculate Total Width dynamically (Only for Desktop now)
+  // Calculate Total Width based on device type
   const worldConfig = useMemo(() => {
-    const sections = Object.keys(DESKTOP_SECTION_WIDTHS);
-    const totalVW = sections.reduce((total, section) => total + DESKTOP_SECTION_WIDTHS[section], 0);
-    return { totalVW, widths: DESKTOP_SECTION_WIDTHS };
-  }, []);
+    const sections = Object.keys(SECTION_WIDTHS);
+    const totalVW = sections.reduce((total, section) => {
+      return total + (isMobile ? SECTION_WIDTHS[section].mobile : SECTION_WIDTHS[section].desktop);
+    }, 0);
+    return { totalVW, widths: SECTION_WIDTHS };
+  }, [isMobile]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -152,8 +149,6 @@ export default function GamePortfolio() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      
-      // Different scroll math for mobile vs desktop
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const progress = scrollY / maxScroll; 
       
@@ -178,14 +173,13 @@ export default function GamePortfolio() {
     };
   }, []);
 
-  // Determine Translation: Horizontal for Desktop, Zero (Vertical Stack) for Mobile
-  const translateX = isMobile ? 0 : -(scrollProgress * (worldConfig.totalVW * (windowWidth / 100) - windowWidth));
+  // Horizontal Translation Logic (Applied to both Mobile and Desktop)
+  const translateX = -(scrollProgress * (worldConfig.totalVW * (windowWidth / 100) - windowWidth));
   
-  // Helper for section layout
-  const getSectionStyle = (sectionName) => {
-    if (isMobile) return { width: '100%', minHeight: '80vh', paddingBottom: '4rem' };
-    return { width: `${DESKTOP_SECTION_WIDTHS[sectionName]}vw` };
-  };
+  // Helper for section width
+  const getWidth = (section) => ({ 
+    width: `${isMobile ? SECTION_WIDTHS[section].mobile : SECTION_WIDTHS[section].desktop}vw` 
+  });
 
   return (
     <div className="relative bg-[#020617] text-white font-sans overflow-x-hidden">
@@ -216,95 +210,96 @@ export default function GamePortfolio() {
         </div>
       </div>
 
-      {/* Main Wrapper */}
-      <div className={`
-        ${isMobile ? 'relative w-full flex flex-col' : 'fixed top-0 left-0 h-full flex items-end flex-nowrap'}
-      `}
-      style={!isMobile ? { 
-        width: `${worldConfig.totalVW}vw`, 
-        transform: `translateX(${translateX}px)`, 
-        transition: 'transform 0.1s linear' 
-      } : {}}
-      >
+      {/* SCROLL INDICATOR */}
+      <div className="fixed bottom-8 right-8 z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 animate-pulse pointer-events-none">
+        <span className="text-xs font-mono text-cyan-400 flex items-center gap-2">
+          SCROLL <ChevronDown className="w-4 h-4" />
+        </span>
+      </div>
 
-          {/* Background Elements (Adjusted for Mobile/Desktop) */}
-          {/* On mobile we hide the complex moving background for simplicity or make it fixed */}
+      {/* Main Wrapper */}
+      <div className="fixed top-0 left-0 h-full flex items-end flex-nowrap"
+        style={{ 
+            width: `${worldConfig.totalVW}vw`, 
+            transform: `translateX(${translateX}px)`, 
+            transition: 'transform 0.1s linear' 
+        }}
+      >
+          {/* Background Stars */}
           <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-full" style={{ background: 'radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%)' }}></div>
-             {/* Stars */}
              <div className="opacity-50">
-               {Array.from({ length: 20 }).map((_, i) => (
-                 <div key={i} className="absolute bg-white rounded-full animate-pulse" style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, width: Math.random() * 3 + 'px', height: Math.random() * 3 + 'px' }} />
+               {Array.from({ length: 30 }).map((_, i) => (
+                 <div key={i} className="absolute bg-white rounded-full animate-pulse" style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 80}%`, width: Math.random() * 3 + 'px', height: Math.random() * 3 + 'px' }} />
                ))}
              </div>
           </div>
 
-          {/* Floor - Visible on both, but styled differently */}
-          <div className={`
-            ${isMobile ? 'fixed bottom-0 left-0 w-full h-16 z-40' : 'absolute bottom-0 w-full h-24 md:h-32'}
-            bg-[#0f172a] border-t-4 border-cyan-500/50
-          `}>
+          {/* Floor */}
+          <div className="absolute bottom-0 w-full h-24 md:h-32 bg-[#0f172a] border-t-4 border-cyan-500/50">
             <div className="w-full h-full opacity-20" style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4 1px, transparent 1px), linear-gradient(#06b6d4 1px, transparent 1px)', backgroundSize: '50px 50px', transform: 'perspective(500px) rotateX(60deg) translateY(-50px)' }}></div>
           </div>
 
           {/* Level 1: Hero */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center min-h-screen pb-20' : 'h-full items-center justify-center flex-shrink-0'}`} style={getSectionStyle('hero')}>
-             <div className="flex flex-col md:flex-row items-center gap-6 px-4 z-10">
+          <div className="relative h-full flex items-center justify-center flex-shrink-0" style={getWidth('hero')}>
+             <div className="flex flex-col md:flex-row items-center gap-6 px-4 -mt-20">
                <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full opacity-75 blur transition duration-500 group-hover:opacity-100 animate-pulse"></div>
-                  <div className="relative w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-slate-900 border-4 border-cyan-500/50 flex items-center justify-center overflow-hidden">
                     <img src={activeProfilePic} alt="Kusuma" className="w-full h-full object-cover" />
                   </div>
                </div>
                <div className="text-center md:text-left">
                  <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">K KUSUMA<br/>KOMALI PRIYA</h1>
-                 <p className="mt-2 text-base md:text-xl text-slate-400 max-w-xs md:max-w-2xl font-light mx-auto md:mx-0">Aspiring Technologist | AI & Data Science Enthusiast</p>
+                 <p className="mt-4 text-lg md:text-xl text-slate-400 max-w-xs md:max-w-2xl font-light mx-auto md:mx-0">Aspiring Technologist | AI & Data Science Enthusiast</p>
                </div>
              </div>
           </div>
 
           {/* Level 2: About */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full items-end pb-32 flex-shrink-0'}`} style={getSectionStyle('about')}>
-             <Tree className="w-32 h-48 md:w-64 md:h-80 absolute bottom-24 md:bottom-32 left-0 opacity-50 md:opacity-100" type={1} />
-             <div className="relative z-10 mx-auto md:ml-8 mb-10 md:mb-32 w-[90%] md:w-[35rem] lg:w-[40rem] bg-slate-900/90 p-6 md:p-10 border border-cyan-500/30 rounded-xl backdrop-blur hover:scale-105 transition-transform duration-300 md:origin-bottom-left">
-               <div className="absolute -top-3 -left-3 w-10 h-10 md:w-16 md:h-16 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(6,182,212,0.6)]"><Code className="w-6 h-6 md:w-8 md:h-8" /></div>
-               <h3 className="text-xl md:text-3xl font-bold text-white mb-4">Mission Briefing</h3>
-               <p className="text-sm md:text-lg text-slate-300 leading-relaxed">I am a traveler in <span className="text-cyan-400 font-bold">AI</span> and <span className="text-purple-400 font-bold">Data Science</span>, building secure, responsible systems. Currently upgrading at IIT Madras.</p>
+          <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('about')}>
+             <Tree className="w-40 h-64 md:w-64 md:h-80 absolute bottom-24 md:bottom-32 left-0 opacity-60 md:opacity-100" type={1} />
+             <div className="relative z-10 ml-10 md:ml-8 mb-40 md:mb-32 w-[85vw] md:w-[35rem] lg:w-[40rem] bg-slate-900/90 p-8 md:p-10 border border-cyan-500/30 rounded-xl backdrop-blur hover:scale-105 transition-transform duration-300 origin-bottom-left">
+               <div className="absolute -top-6 -left-3 w-12 h-12 md:w-16 md:h-16 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(6,182,212,0.6)]"><Code className="w-6 h-6 md:w-8 md:h-8" /></div>
+               <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Mission Briefing</h3>
+               <p className="text-base md:text-lg text-slate-300 leading-relaxed">I am a traveler in <span className="text-cyan-400 font-bold">AI</span> and <span className="text-purple-400 font-bold">Data Science</span>, building secure, responsible systems. Currently upgrading at IIT Madras.</p>
              </div>
           </div>
 
           {/* Level 3: Education */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full items-end pb-32 flex-shrink-0'}`} style={getSectionStyle('education')}>
-            {/* Hide Level post on mobile to save space, or keep it absolute */}
-            <div className={`${isMobile ? 'hidden' : 'absolute bottom-24 md:bottom-32 left-0'}`}><LevelPost title="The Academy" level="2" /></div>
+          <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('education')}>
+            <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Academy" level="2" /></div>
             
-            <div className={`flex ${isMobile ? 'flex-col gap-12' : 'items-end gap-4 md:gap-12 ml-20'}`}>
+            {/* Increased Gap for Mobile so buildings don't overlap */}
+            <div className="flex items-end gap-10 md:gap-12 ml-24 md:ml-20">
               <div className="relative group hover:z-10 flex flex-col items-center">
-                 <Building className="w-36 h-56 md:w-64 md:h-96" label="NJC" />
+                 <Building className="w-40 h-64 md:w-64 md:h-96" label="NJC" />
                  <div className="bg-black/90 p-2 rounded border border-cyan-500/50 whitespace-nowrap mt-2"><p className="text-sm text-cyan-300">Intermediate</p></div>
               </div>
               <div className="relative group hover:z-10 flex flex-col items-center">
-                 <Building className="w-48 h-72 md:w-80 md:h-[30rem]" label="IIT MADRAS" />
+                 <Building className="w-56 h-80 md:w-80 md:h-[30rem]" label="IIT MADRAS" />
                  <div className="bg-black/90 p-2 rounded border border-cyan-500/50 whitespace-nowrap mt-2"><p className="text-sm text-cyan-300">BS Data Science</p></div>
               </div>
             </div>
           </div>
 
           {/* Level 4: Experience */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full items-end pb-32 px-2 flex-shrink-0'}`} style={getSectionStyle('experience')}>
-            <div className={`${isMobile ? 'hidden' : 'absolute bottom-24 md:bottom-32 left-0'}`}><LevelPost title="The Lab" level="3" /></div>
+          <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('experience')}>
+            <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="The Lab" level="3" /></div>
             
-            <div className={`flex ${isMobile ? 'flex-col gap-8 w-full items-center' : 'gap-4 md:gap-16 ml-20 md:ml-24'}`}>
-               <ExperienceCard title="YugaYatra" role="Front-End Dev" color="cyan" icon={Trophy} height="h-32" />
-               <ExperienceCard title="Research" role="1st Place Winner" color="purple" icon={Star} height="h-40" className={isMobile ? '' : 'md:-mt-20'} />
-               <ExperienceCard title="SIH Hackathon" role="Finalist" color="orange" icon={Zap} height="h-32" />
+            {/* Massive gap for mobile to spread cards out */}
+            <div className="flex gap-8 md:gap-16 ml-24 md:ml-24">
+               <ExperienceCard title="YugaYatra" role="Front-End Dev" color="cyan" icon={Trophy} height="h-40" />
+               {/* Negative Margin Top only for Desktop to create staggered look, removed for mobile */}
+               <ExperienceCard title="Research" role="1st Place Winner" color="purple" icon={Star} height="h-48" className="md:-mt-20" />
+               <ExperienceCard title="SIH Hackathon" role="Finalist" color="orange" icon={Zap} height="h-40" />
             </div>
           </div>
 
           {/* Level 5: Skills */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full items-end pb-48 flex-shrink-0'}`} style={getSectionStyle('skills')}>
-            <div className={`${isMobile ? 'hidden' : 'absolute bottom-24 md:bottom-32 left-0'}`}><LevelPost title="Skill Valley" level="4" /></div>
-            <div className={`flex ${isMobile ? 'flex-wrap justify-center gap-8' : 'gap-4 md:gap-12 ml-20 md:ml-24'}`}>
+          <div className="relative h-full flex items-end pb-48 flex-shrink-0" style={getWidth('skills')}>
+            <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Skill Valley" level="4" /></div>
+            <div className="flex gap-8 md:gap-12 ml-24 md:ml-24">
               <Collectible icon={Terminal} label="Python" />
               <Collectible icon={Code} label="React" />
               <Collectible icon={Database} label="SQL" />
@@ -313,9 +308,10 @@ export default function GamePortfolio() {
           </div>
 
           {/* Level 6: Projects */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full items-end pb-32 flex-shrink-0'}`} style={getSectionStyle('projects')}>
-             <div className={`${isMobile ? 'hidden' : 'absolute bottom-24 md:bottom-32 left-0'}`}><LevelPost title="Project Arcade" level="5" /></div>
-             <div className={`flex ${isMobile ? 'flex-col gap-10' : 'gap-6 md:gap-10 ml-20 md:ml-24 items-end'}`}>
+          <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('projects')}>
+             <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Arcade" level="5" /></div>
+             {/* Huge Gap for Mobile */}
+             <div className="flex gap-12 md:gap-10 ml-24 md:ml-24 items-end">
                 <ArcadeMachine title="FRAUD DETECTOR" tech="ML • Python" link="https://github.com/Komali0208/creditcard" />
                 <ArcadeMachine title="TODO LIST" tech="Python • SQLite" link="https://github.com/Komali0208/todo-list" />
                 <ArcadeMachine title="STUDENT SYS" tech="HTML • SQL" link="https://github.com/Komali0208/classroom-management-system" />
@@ -324,10 +320,10 @@ export default function GamePortfolio() {
           </div>
 
           {/* Level 7: Contact */}
-          <div className={`relative flex ${isMobile ? 'flex-col justify-center items-center pb-32' : 'h-full flex-col items-center justify-center pb-20 flex-shrink-0'}`} style={getSectionStyle('contact')}>
-            <div className="relative z-10 bg-black/80 p-6 md:p-12 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] text-center max-w-sm md:max-w-2xl backdrop-blur-xl">
-              <h2 className="text-2xl md:text-5xl font-black text-white mb-4">GAME OVER?</h2>
-              <p className="text-sm md:text-xl text-cyan-400 mb-8 font-mono">New Game+ : Start Project</p>
+          <div className="relative h-full flex flex-col items-center justify-center pb-20 flex-shrink-0" style={getWidth('contact')}>
+            <div className="relative z-10 bg-black/80 p-8 md:p-12 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] text-center max-w-[90vw] md:max-w-2xl backdrop-blur-xl">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">GAME OVER?</h2>
+              <p className="text-lg md:text-xl text-cyan-400 mb-8 font-mono">New Game+ : Start Project</p>
               <div className="grid grid-cols-1 gap-4 text-left">
                  <a href="mailto:kkp.kodimela@gmail.com" className="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group border border-white/5 hover:border-cyan-500/50">
                     <Mail className="w-6 h-6 text-red-400" /><span className="text-sm md:text-lg text-white font-mono">kkp.kodimela@gmail.com</span>
@@ -341,36 +337,33 @@ export default function GamePortfolio() {
 
       </div>
 
-      {/* Character - Only show on Desktop Mode, or Fixed at bottom on Mobile */}
-      <div className={`
-        fixed z-20 pointer-events-none drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]
-        ${isMobile ? 'bottom-4 right-4 w-16 h-16' : 'bottom-24 md:bottom-32 left-1/2 -translate-x-1/2 w-16 h-16 md:w-24 md:h-24'}
-      `}>
+      {/* Character - Fixed position, walking animation */}
+      <div className="fixed z-20 pointer-events-none drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] bottom-24 md:bottom-32 left-1/2 -translate-x-1/2 w-20 h-20 md:w-24 md:h-24">
            <div style={{ transform: facingRight ? 'scaleX(1)' : 'scaleX(-1)', transition: 'transform 0.2s' }}>
              <PlayerCharacter isWalking={isWalking} />
            </div>
       </div>
       
-      {/* Spacer for scrolling - Only needed for Desktop "Fake" Scroll */}
-      {!isMobile && <div style={{ height: `${worldConfig.totalVW * 0.5}vh` }}></div>}
+      {/* Spacer for scrolling - Long scroll area needed for mobile due to increased width */}
+      <div style={{ height: `${worldConfig.totalVW * (isMobile ? 2 : 0.5)}vh` }}></div>
     </div>
   );
 }
 
-// Helper Component for Experience to reduce duplication
+// Helper Component for Experience
 const ExperienceCard = ({ title, role, color, icon: Icon, height, className = "" }) => {
     const borderColors = { cyan: 'border-cyan-500', purple: 'border-purple-500', orange: 'border-orange-500' };
     const gradients = { cyan: 'from-transparent to-cyan-500', purple: 'from-transparent to-purple-500', orange: 'from-transparent to-orange-500' };
     
     return (
-        <div className={`relative flex flex-col items-center group ${className}`}>
-            <div className={`hidden md:block w-1 ${height} bg-gradient-to-b ${gradients[color]}`}></div>
-            <div className={`w-64 md:w-80 bg-slate-900/90 p-6 rounded-lg border-l-4 ${borderColors[color]} hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg`}>
+        <div className={`relative flex flex-col items-center group flex-shrink-0 ${className}`}>
+            <div className={`w-1 ${height} bg-gradient-to-b ${gradients[color]}`}></div>
+            <div className={`w-72 md:w-80 bg-slate-900/90 p-6 rounded-lg border-l-4 ${borderColors[color]} hover:bg-slate-800 transition-all transform hover:-translate-y-2 shadow-lg`}>
             <div className="flex justify-between items-start mb-2">
-                <h4 className="font-bold text-white text-base md:text-lg">{title}</h4>
-                <Icon className="w-4 h-4 text-yellow-400" />
+                <h4 className="font-bold text-white text-lg md:text-lg">{title}</h4>
+                <Icon className="w-5 h-5 text-yellow-400" />
             </div>
-            <p className="text-xs md:text-sm text-slate-400 font-medium">{role}</p>
+            <p className="text-sm md:text-sm text-slate-400 font-medium">{role}</p>
             </div>
         </div>
     );
