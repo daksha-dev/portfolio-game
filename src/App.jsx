@@ -6,7 +6,8 @@ import {
 } from 'lucide-react';
 
 // --- CONFIGURATION ---
-const activeProfilePic = "https://github.com/komali0208.png"; 
+import profilePic from './me.jpg';
+const activeProfilePic = profilePic;
 
 // WIDTH CONFIGURATION (The "Map Size")
 // UPDATED: Increased mobile widths significantly to fix iPhone overlapping.
