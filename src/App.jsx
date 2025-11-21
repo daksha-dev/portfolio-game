@@ -296,9 +296,9 @@ export default function GamePortfolio() {
               <Collectible icon={Terminal} label="Python" />
               <Collectible icon={Code} label="React" />
               <Collectible icon={Database} label="SQL" />
-              <Collectible icon={Cpu} label="ML" />
-              <Collectible icon={BarChart} label="Stats" /> 
-              <Collectible icon={Binary} label="Data Sci" /> 
+              <Collectible icon={Cpu} label="Machine Learning" />
+              <Collectible icon={BarChart} label="Statistics" /> 
+              <Collectible icon={Binary} label="Data Science" /> 
             </div>
           </div>
 
