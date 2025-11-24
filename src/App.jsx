@@ -291,7 +291,7 @@ export default function GamePortfolio() {
                  {/* Tooltip / popup on hover */}
                  <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-64 bg-slate-900/95 border border-cyan-500/70 rounded-lg p-3 shadow-lg text-xs text-slate-200 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
                    <p className="font-semibold text-cyan-300 mb-1">BS in Data Science</p>
-                   <p>Expected Graduation: 2023-2028</p>
+                   <p>Expected Graduation: 2024-2028</p>
                  </div>
               </div>
             </div>
