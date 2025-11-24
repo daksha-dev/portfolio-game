@@ -248,7 +248,7 @@ export default function GamePortfolio() {
                <div className="text-center md:text-left">
                  <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.3)] tracking-tight leading-tight">K KUSUMA<br/>KOMALI PRIYA</h1>
                  <p className="mt-4 text-lg md:text-xl text-slate-400 max-w-xs md:max-w-2xl font-light mx-auto md:mx-0">
-                  I am an aspiring technologist with strong interests in <span className="text-cyan-400 font-bold">artificial intelligence</span> and <span className="text-purple-400 font-bold">data science</span>. I am focused on developing a deep understanding of intelligent systems and how data can be used responsibly and securely. I actively work on building my technical foundation through projects and continuous learning.
+                  Aspiring Technologist | AI &amp; Data Science Enthusiast
                  </p>
                </div>
              </div>
@@ -279,7 +279,7 @@ export default function GamePortfolio() {
                  {/* Tooltip / popup on hover */}
                  <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-56 bg-slate-900/95 border border-cyan-500/70 rounded-lg p-3 shadow-lg text-xs text-slate-200 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
                    <p className="font-semibold text-cyan-300 mb-1">Intermediate</p>
-                   <p>Graduation Year: 2023</p>
+                   <p>Graduation: 2021-2023</p>
                  </div>
               </div>
               {/* IIT Madras */}
@@ -291,7 +291,7 @@ export default function GamePortfolio() {
                  {/* Tooltip / popup on hover */}
                  <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-64 bg-slate-900/95 border border-cyan-500/70 rounded-lg p-3 shadow-lg text-xs text-slate-200 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200">
                    <p className="font-semibold text-cyan-300 mb-1">BS in Data Science</p>
-                   <p>Expected Graduation: 2028</p>
+                   <p>Expected Graduation: 2023-2028</p>
                  </div>
               </div>
             </div>
@@ -343,7 +343,7 @@ export default function GamePortfolio() {
           </div>
 
           {/* Level 6: Projects */}
-          <div className="relative h-full flex items-end pb-32 flex-shrink-0" style={getWidth('projects')}>
+          <div className="relative h-full flex items>end pb-32 flex-shrink-0" style={getWidth('projects')}>
              <div className="absolute bottom-24 md:bottom-32 left-0"><LevelPost title="Arcade" level="5" /></div>
              <div className="flex gap-12 md:gap-10 ml-24 md:ml-24 items-end">
                 <ArcadeMachine title="FRAUD DETECTOR" tech="ML • Python" link="https://github.com/Komali0208/creditcard" />
